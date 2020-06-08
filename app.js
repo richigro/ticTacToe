@@ -1,50 +1,78 @@
-// console.log('Connected');
 
 let appContainer = document.getElementsByClassName('js-app-container')[0];
 
-let elements = document.querySelectorAll('.element');
+let resetButton = document.querySelector('#js-reset-btn');
+
+resetButton.addEventListener('click', () => {
+  //   console.log('Hello');
+  //clear the board
+
+});
+
+// let elements = document.querySelectorAll('.element');
 let scoreBoard = document.querySelector('.scoreBoard');
+
+let state = {
+    isGameOver: false,
+    winner: '',
+    currentTurn: 'X',
+    // check to see if all squares all filled
+    tie: false
+}
 
 let playersTurn = 'X';
 
-elements.forEach((element) => {
-    element.addEventListener('click', function(event){
-        // check to see if spot is already occupied
-        if(this.innerText !== ''){
-            // if already occupied then just retun
+
+//one event listener test
+let table = document.querySelector('.table');
+
+table.addEventListener('click', (event) => {
+    // console.log('From new stuff', event.target);
+    let element = event.target;
+    
+    //check to see if elemnt is not empty
+    if(element.innerText !== '' || state.isGameOver){
+        // if already occupied then just retun
+        // this will stop from placing on the same spot
+        return;
+    }
+
+    if(playersTurn === 'X'){
+        element.innerText = 'X';
+        // do row check
+        rowCheck(element);
+        if(state.isGameOver){
+            //end the event listener
             return;
         }
-        
-        
-        if(playersTurn === 'X'){
-            this.innerText = 'X';
-            // do row check
-            rowCheck(this);
-            //do a column check
-            columnCheck(this);
-            // do a diagonal check
-            majorDiagonalCheck(this);
-            //chek minor diagonal
-            minorDiagonalCheck(this);
-            // last step change turn 
-            playersTurn = 'O';
+        //do a column check
+        columnCheck(element);
+        // do a diagonal check
+        majorDiagonalCheck(element);
+        //chek minor diagonal
+        minorDiagonalCheck(element);
+        //check to see if its a tie
+        checkForTie();
+        // last step change turn 
+        playersTurn = 'O';
 
-        } else {
-            this.innerText = 'O';
-              // do row check
-            rowCheck(this);
-            //do a column check
-            columnCheck(this);
-            //do a diagonal check
-            majorDiagonalCheck(this);
-            //chek minor diagonal
-            minorDiagonalCheck(this);
-            // last step change turn 
-             playersTurn = 'X';
-        }
-    });
+    } else {
+        element.innerText = 'O';
+          // do row check
+        rowCheck(element);
+        //do a column check
+        columnCheck(element);
+        //do a diagonal check
+        majorDiagonalCheck(element);
+        //chek minor diagonal
+        minorDiagonalCheck(element);
+        //check to see if its a tie
+        checkForTie();
+        // last step change turn 
+         playersTurn = 'X';
+    }
+
 });
-
 
 const rowCheck = (element) => { 
   let currentRow =  Number(element.parentElement.getAttribute('data-row'));
@@ -57,7 +85,10 @@ const rowCheck = (element) => {
   }
   // check to see if counter equal to 3
   if(count === 3){
-    alert(`${element.innerText} won the game!`);
+    // console.log(`${element.innerText} won the game!`);
+    //change the game to over
+    state.isGameOver = true;
+    scoreBoard.innerText = `${element.innerText} won the game!`;
   }
 }
 
@@ -96,7 +127,8 @@ const columnCheck = (element) => {
 
     // check to see if counter equal to 3
     if(count === 3){
-        alert(`${element.innerText} won the game!`);
+        // alert(`${element.innerText} won the game!`);
+        scoreBoard.innerText = `${element.innerText} won the game!`;
     }
     
 }
@@ -115,7 +147,8 @@ const majorDiagonalCheck = (element) => {
     }
  
   if(count === 3){
-    alert(`${element.innerText} won the game!`);
+    // alert(`${element.innerText} won the game!`);
+    scoreBoard.innerText = `${element.innerText} won the game!`;
   }
 }
 
@@ -127,7 +160,7 @@ const minorDiagonalCheck = (element) => {
     let j =2;
     for(let i =0; i < allRows.length; i++){
       currentElement = allRows[i].children[j];
-      console.log(currentElement);
+    //   console.log(currentElement);
       if(currentElement.innerText === element.innerText){
         //increase count by one
         count++;
@@ -136,11 +169,44 @@ const minorDiagonalCheck = (element) => {
     }
  
   if(count === 3){
-    alert(`${element.innerText} won the game!`);
+    // alert(`${element.innerText} won the game!`);
+    scoreBoard.innerText = `${element.innerText} won the game!`;
   }
 }
 
 
 const getAllSiblings = (element) => {
   
+}
+
+const checkForTie = () => {
+  let count = 0;
+  let allElements = getAllTableElements();
+  
+  allElements.forEach((element) => {
+      if(element.innerText !== ''){
+        count++;
+      }
+  });
+
+  if(count === 9 ){
+    state.isGameOver = true;
+    scoreBoard.innerText = `Its a tie!`;
+  }
+}
+
+
+const getAllTableElements = () => {
+    let rows = table.children[0].children;
+    let currentRow;
+    let innerEl;
+    let allElements = [];
+    for(let i =0; i < rows.length; i++){
+        currentRow = rows[i].children;
+        for(let j =0; j < currentRow.length; j++){
+          innerEl = currentRow[j];
+          allElements.push(innerEl);
+        }
+    }
+    return allElements;
 }
