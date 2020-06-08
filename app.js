@@ -22,6 +22,10 @@ elements.forEach((element) => {
             rowCheck(this);
             //do a column check
             columnCheck(this);
+            // do a diagonal check
+            majorDiagonalCheck(this);
+            //chek minor diagonal
+            minorDiagonalCheck(this);
             // last step change turn 
             playersTurn = 'O';
 
@@ -31,6 +35,10 @@ elements.forEach((element) => {
             rowCheck(this);
             //do a column check
             columnCheck(this);
+            //do a diagonal check
+            majorDiagonalCheck(this);
+            //chek minor diagonal
+            minorDiagonalCheck(this);
             // last step change turn 
              playersTurn = 'X';
         }
@@ -79,7 +87,7 @@ const columnCheck = (element) => {
             }
         }
     }
-    console.log(columnSiblings);
+    // console.log(columnSiblings);
     columnSiblings.forEach((child) => {
         if(child.innerText === element.innerText){
             count++;
@@ -93,8 +101,43 @@ const columnCheck = (element) => {
     
 }
 
-const diagonalCheck = () => {
-    
+const majorDiagonalCheck = (element) => {
+    let count = 0;
+    let allRows = element.parentElement.parentElement.children;
+    let currentElement;
+    for(let i =0; i < allRows.length; i++){
+      currentElement = allRows[i].children[i];
+    //   console.log(currentElement);
+      if(currentElement.innerText === element.innerText){
+        //increase count by one
+        count++;
+      }
+    }
+ 
+  if(count === 3){
+    alert(`${element.innerText} won the game!`);
+  }
+}
+
+
+const minorDiagonalCheck = (element) => {
+    let count = 0;
+    let allRows = element.parentElement.parentElement.children;
+    let currentElement;
+    let j =2;
+    for(let i =0; i < allRows.length; i++){
+      currentElement = allRows[i].children[j];
+      console.log(currentElement);
+      if(currentElement.innerText === element.innerText){
+        //increase count by one
+        count++;
+      }
+      j--;
+    }
+ 
+  if(count === 3){
+    alert(`${element.innerText} won the game!`);
+  }
 }
 
 
