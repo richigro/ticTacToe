@@ -1,3 +1,19 @@
 * {
-    color: red;
+    /* color: red; */
+}
+
+.table {
+    width: 500px;
+    /* height: 500px; */
+    border: 1px solid black;
+}
+
+.row {
+   /* width: 500px; */
+   height: 50px;
+   border: 1px solid black;
+}
+
+.element {
+  border: 1px solid pink;
 }

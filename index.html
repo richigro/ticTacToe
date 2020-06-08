@@ -2,26 +2,27 @@
 <html>
   <head>
    <title>Tic Tac Toe</title>
-   <link rel="stylesheet" type="text/css" href="mystyle.css"/>
+   <link rel="stylesheet" type="text/css" href="styles.css"/>
   </head>
   <body>
       <h1>Tic Tac Toe</h1>
+      <h3 class="scoreBoard"></h3>
       <div class="js-app-container container">
           <table class="table">
-              <tr class="row">
-                  <td id="top-left">X</td>
-                  <td id='top-mid'>X</td>
-                  <td id="top-right">X</td>
+              <tr class="row" data-row="0">
+                  <td id="top-left" class="element" data-col="0"></td>
+                  <td id='top-mid' class="element" data-col="1"></td></td>
+                  <td id="top-right" class="element" data-col="2"></td></td>
               </tr>
-              <tr class="row">
-                <td id="mid-left">X</td>
-                <td id="mid-mid">X</td>
-                <td id="mid-right">X</td>
+              <tr class="row" data-row="1">
+                <td id="mid-left" class="element" data-col="0"></td>
+                <td id="mid-mid" class="element" data-col="1"></td>
+                <td id="mid-right" class="element" data-col="2"></td>
               </tr>
-              <tr class="row">
-                <td id="bottom-left">X</td>
-                <td id="bottom-mid">X</td>
-                <td id="bottom-right">X</td>
+              <tr class="row" data-row="2">
+                <td id="bottom-left" class="element" data-col="0"></td>
+                <td id="bottom-mid" class="element" data-col="1"></td>
+                <td id="bottom-right" class="element" data-col="2"></td>
               </tr>
           </table>
       </div>
